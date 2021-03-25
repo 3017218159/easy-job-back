@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="cn.tju.easy_job.dao.UsersDao">
+ 	<!-- 查询标签 -->
+	<select id="getUsers" resultType="cn.tju.easy_job.entity.Users">
+		select id as id, phoneNumber as phoneNumber, status as status, password as password, username as username 
+		from users
+		where phoneNumber = #{phoneNumber}
+	</select>
+	
+ </mapper>

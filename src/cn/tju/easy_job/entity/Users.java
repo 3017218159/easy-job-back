@@ -2,7 +2,7 @@ package cn.tju.easy_job.entity;
 
 public class Users {
 	private int id;
-	private String phoneNumber;
+	private String email;
 	private String status;
 	private String password;
 	private String username;
@@ -10,10 +10,10 @@ public class Users {
 	public Users() {
 		super();
 	}
-	public Users(int id, String phoneNumber, String status, String password, String username) {
+	public Users(int id, String email, String status, String password, String username) {
 		super();
 		this.id = id;
-		this.phoneNumber = phoneNumber;
+		this.email = email;
 		this.status = status;
 		this.password = password;
 		this.username = username;
@@ -24,11 +24,11 @@ public class Users {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getEmail() {
+		return email;
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getStatus() {
 		return status;
@@ -50,7 +50,7 @@ public class Users {
 	}
 	@Override
 	public String toString() {
-		return "{\"id\":\"" + id + "\", \"phoneNumber\":\"" + phoneNumber + "\", \"status\":\"" + status + "\", \"password\":\"" + password
+		return "{\"id\":\"" + id + "\", \"email\":\"" + email + "\", \"status\":\"" + status + "\", \"password\":\"" + password
 				+ "\", \"username\":\"" + username + "\"}";
 	}
 }

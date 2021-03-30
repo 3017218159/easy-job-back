@@ -13,8 +13,18 @@ public class UsersServiceImpl implements UsersService {
 	private UsersDao usersDao;
 
 	@Override
-	public Users getUsers(String phoneNumber) {
-		return usersDao.getUsers(phoneNumber);
+	public Users getUsers(String email) {
+		return usersDao.getUsers(email);
+	}
+
+	@Override
+	public String login(String email, String status) {
+		return usersDao.login(email, status);
+	}
+
+	@Override
+	public void register(String email, String status, String username, String password) {
+		usersDao.register(email, status, username, password);
 	}
 
 }

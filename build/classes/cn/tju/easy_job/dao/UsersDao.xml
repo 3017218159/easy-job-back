@@ -6,9 +6,17 @@
  <mapper namespace="cn.tju.easy_job.dao.UsersDao">
  	<!-- 查询标签 -->
 	<select id="getUsers" resultType="cn.tju.easy_job.entity.Users">
-		select id as id, phoneNumber as phoneNumber, status as status, password as password, username as username 
+		select id as id, email as email, status as status, password as password, username as username 
 		from users
-		where phoneNumber = #{phoneNumber}
+		where email = #{email}
+	</select>
+	<select id="login" resultType="string">
+		select password as password 
+		from users
+		where email = #{param1} and status = #{param2}
 	</select>
 	
+	<insert id="register">
+		insert into users(email, status, username, password) values(#{param1}, #{param2}, #{param3}, #{param4});
+	</insert>
  </mapper>

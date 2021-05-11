@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="cn.tju.easy_job.dao.ChatDao">
+ 	<!-- 查询标签 -->
+	<select id="getChatList" resultType="cn.tju.easy_job.entity.MySession">
+		select id, user1_id as user1Id, user2_id as user2Id, message, datetime 
+		from sessions
+		where user1_id = #{id} or user2_id = #{id}
+		order by datetime desc
+	</select>
+	<select id="getHistory" resultType="cn.tju.easy_job.entity.MyMessage">
+		select id, session_id as sessionId, from_id as fromId, to_id as toId, message, datetime
+		from chat_message
+		where session_id = #{sessionId}
+	</select>
+	<select id="getSessionId" resultType="String">
+		select id as sessionId
+		from sessions
+		where (user1_id = #{param1} and user2_id = #{param2}) or (user1_id = #{param2} and user2_id = #{param1})
+	</select>
+	<insert id="createSession">
+		insert into sessions(user1_id, user2_id) value(#{param1}, #{param2})
+	</insert>
+ </mapper>

@@ -14,9 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.tju.easy_job.entity.EnterpriseUserInfo;
 import cn.tju.easy_job.entity.MyCallback;
 import cn.tju.easy_job.entity.MyEmail;
+import cn.tju.easy_job.entity.StudentUserInfo;
 import cn.tju.easy_job.entity.Users;
+import cn.tju.easy_job.service.UserInfoService;
 import cn.tju.easy_job.service.UsersService;
 
 @Controller
@@ -27,17 +30,29 @@ public class UsersController {
 	HashMap<String, String> emailCodeMap = new HashMap<String, String>();
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private UserInfoService userInfoService;
 	
 	@RequestMapping(value="/getUsers", produces = "text/html; charset=UTF-8")
 	public @ResponseBody String getUsers(HttpServletRequest request) {
 		String email = request.getParameter("email");
+		String status = request.getParameter("status");
 		if(email == null || email.equals("")) {
 			MyCallback error = new MyCallback("传入参数有误", "error");
 			return error.toString();
 		}
-		Users users = usersService.getUsers(email);
+		Users users = usersService.getUsers(email, status);
 		System.out.println(users.getUsername() + " 已登录");
 		String message = users.toString();
+		if (status.equals("STUDENT")) {
+			StudentUserInfo userInfo = userInfoService.getStudentInfoByUserId(users.getId());
+			message = message.substring(0, message.length()-1);
+			message += ", \"avatar\": \"" + userInfo.getAvatar() + "\"}";
+		} else {
+			EnterpriseUserInfo userInfo = userInfoService.getEnterpriseInfoByUserId(users.getId());
+			message = message.substring(0, message.length()-1);
+			message += ", \"avatar\": \"" + userInfo.getAvatar() + "\"}";
+		}
 		MyCallback callback = new MyCallback(message, "success");
 		return callback.toString();
 	}
@@ -94,14 +109,21 @@ public class UsersController {
 		}
 		
 		//System.out.println(email + " " + password + " " + username + " " + status + " " + code);
-		usersService.register(email, status, username, password);
 		
 		String codeLocal = emailCodeMap.get(email);
 		if (!code.equals(codeLocal)) {
 			MyCallback error = new MyCallback("验证码错误，请检查输入", "error");
 			return error.toString();
 		} else {
+			usersService.register(email, status, username, password);
 			emailCodeMap.remove(email);
+			Users users = usersService.getUsers(email, status);
+			int id = users.getId();
+			if (status.equals("STUDENT")) {
+				userInfoService.createStudentInfo(id);
+			} else {
+				userInfoService.createEnterpriseInfo(id);
+			}
 			MyCallback callback = new MyCallback("注册成功", "success");
 			return callback.toString();
 		}

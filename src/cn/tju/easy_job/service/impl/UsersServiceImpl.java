@@ -13,8 +13,8 @@ public class UsersServiceImpl implements UsersService {
 	private UsersDao usersDao;
 
 	@Override
-	public Users getUsers(String email) {
-		return usersDao.getUsers(email);
+	public Users getUsers(String email, String status) {
+		return usersDao.getUsers(email, status);
 	}
 
 	@Override

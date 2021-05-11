@@ -7,7 +7,7 @@ import cn.tju.easy_job.entity.Users;
 public interface UsersDao {
 	List<Users> getUsers();
 
-	Users getUsers(String email);
+	Users getUsers(String email, String status);
 
 	String login(String email, String status);
 

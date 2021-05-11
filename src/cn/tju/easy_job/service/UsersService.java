@@ -4,7 +4,7 @@ import cn.tju.easy_job.entity.Users;
 
 public interface UsersService {
 
-	Users getUsers(String email);
+	Users getUsers(String email, String status);
 
 	String login(String email, String status);
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="cn.tju.easy_job.dao.UserInfoDao">
+ 	<!-- 查询标签 -->
+	<select id="getEnterpriseInfoByInfoId" resultType="cn.tju.easy_job.entity.EnterpriseUserInfo">
+		select id as id, user_id as userId, name, sex, birth, company, position, avatar 
+		from enterprise_info
+		where id = #{userInfoId}
+	</select>
+	<select id="getStudentInfoByInfoId" resultType="cn.tju.easy_job.entity.StudentUserInfo">
+		select id as id, user_id as userId, name, sex, birth, school, major, avatar 
+		from student_info
+		where id = #{userInfoId}
+	</select>
+	<select id="getEnterpriseInfoByUserId" resultType="cn.tju.easy_job.entity.EnterpriseUserInfo">
+		select id as id, user_id as userId, name, sex, birth, company, position, avatar 
+		from enterprise_info
+		where user_id = #{userId}
+	</select>
+	<select id="getStudentInfoByUserId" resultType="cn.tju.easy_job.entity.StudentUserInfo">
+		select id as id, user_id as userId, name, sex, birth, school, major, avatar 
+		from student_info
+		where user_id = #{userId}
+	</select>
+	<insert id="createEnterpriseInfo">
+		insert into enterprise_info(user_id) value(#{id})
+	</insert>
+	<insert id="createStudentInfo">
+		insert into student_info(user_id) value(#{id})
+	</insert>
+	<update id="updateStudentInfo">
+		update student_info 
+		set name = #{param3}, sex = #{param4}, birth = #{param5}, school = #{param6}, major = #{param7}
+		where id = #{param1}
+	</update>
+	<update id="updateEnterpriseInfo">
+		update enterprise_info 
+		set name = #{param3}, sex = #{param4}, birth = #{param5}, company = #{param6}, position = #{param7}
+		where id = #{param1}
+	</update>
+	
+ </mapper>

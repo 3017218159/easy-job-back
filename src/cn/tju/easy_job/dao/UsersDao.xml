@@ -8,7 +8,7 @@
 	<select id="getUsers" resultType="cn.tju.easy_job.entity.Users">
 		select id as id, email as email, status as status, password as password, username as username 
 		from users
-		where email = #{email}
+		where email = #{param1} and status = #{param2}
 	</select>
 	<select id="login" resultType="string">
 		select password as password 
